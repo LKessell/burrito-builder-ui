@@ -16,9 +16,11 @@ describe('Order form user flows', () => {
     cy.intercept('POST', 'http://localhost:3001/api/v1/orders', {
       statusCode: 204
     });
+    cy.visit('http://localhost:3000/');
   });
 
-  it('Should be able to visit the page', () => {
-    cy.visit('http://localhost:3000/');
-  })
+  it('Should prompt the user to input a name and select ingredients', () => {
+    cy.contains('Please enter your name and choose at least one ingredient');
+    cy.contains('Order: Nothing selected');
+  });
 });
