@@ -10,14 +10,20 @@ describe('App user flows', () => {
       orders: [
         {
           id: 1,
-          name: Lauren,
+          name: 'Lauren',
           ingredients: ['carnitas', 'pico de gallo', 'queso fresco']
         }, {
           id: 2,
-          name: Lestrende,
+          name: 'Lestrende',
           ingredients: ['steak', 'sour cream']
         }
       ]
     });
+  });
+
+  it('Should be able to visit the page and see a list of orders', () => {
+    cy.visit('http://localhost:3000/');
+    cy.contains('Burrito Builder');
+    cy.get('div').should('have.class', 'order').contains('Lauren');
   });
 });
