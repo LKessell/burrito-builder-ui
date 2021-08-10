@@ -82,5 +82,34 @@ describe('Order form user flows', () => {
     cy.get('button').contains('pico de gallo').click();
     cy.get('button').contains('Submit Order').click();
     cy.get('.order').should('have.length', 3);
+    cy.get('.order').contains('Lolo MAXXX');
+  });
+
+  it('Form should be cleared after an order is submitted', () => {
+    cy.intercept('GET', 'http://localhost:3001/api/v1/orders', {
+      orders: [
+        {
+          id: 1,
+          name: 'Lauren',
+          ingredients: ['carnitas', 'pico de gallo', 'queso fresco']
+        }, {
+          id: 2,
+          name: 'Lestrende',
+          ingredients: ['steak', 'sour cream']
+        }, {
+          id: 3,
+          name: 'Lolo MAXXX',
+          ingredients: ['pico de gallo', 'carnitas']
+        }
+      ]
+    });
+
+    cy.get('.order').should('have.length', 2);
+    cy.get('input').type('Lolo MAXXX');
+    cy.get('button').contains('guacamole').click();
+    cy.get('button').contains('pico de gallo').click();
+    cy.get('button').contains('Submit Order').click();
+    cy.get('input').should('have.value', '');
+    cy.contains('Order: Nothing selected');
   });
 });
