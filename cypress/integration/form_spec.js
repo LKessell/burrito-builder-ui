@@ -14,7 +14,12 @@ describe('Order form user flows', () => {
       ]
     });
     cy.intercept('POST', 'http://localhost:3001/api/v1/orders', {
-      statusCode: 204
+      statusCode: 201,
+      body: {
+        id: 3,
+        name: 'Lolo MAXXX',
+        ingredients: ['pico de gallo', 'carnitas']
+      },
     });
     cy.visit('http://localhost:3000/');
   });
@@ -50,5 +55,32 @@ describe('Order form user flows', () => {
     cy.get('input').type('Lolo MAXXX');
     cy.get('button').contains('Submit Order').click();
     cy.get('.order').should('have.length', 2);
+  });
+
+  it('After adding a name and choosing ingredients, the form can be submitted successfully', () => {
+    cy.intercept('GET', 'http://localhost:3001/api/v1/orders', {
+      orders: [
+        {
+          id: 1,
+          name: 'Lauren',
+          ingredients: ['carnitas', 'pico de gallo', 'queso fresco']
+        }, {
+          id: 2,
+          name: 'Lestrende',
+          ingredients: ['steak', 'sour cream']
+        }, {
+          id: 3,
+          name: 'Lolo MAXXX',
+          ingredients: ['pico de gallo', 'carnitas']
+        }
+      ]
+    });
+
+    cy.get('.order').should('have.length', 2);
+    cy.get('input').type('Lolo MAXXX');
+    cy.get('button').contains('guacamole').click();
+    cy.get('button').contains('pico de gallo').click();
+    cy.get('button').contains('Submit Order').click();
+    cy.get('.order').should('have.length', 3);
   });
 });
