@@ -26,4 +26,14 @@ describe('App user flows', () => {
     cy.contains('Burrito Builder');
     cy.get('div').should('have.class', 'order').contains('Lauren');
   });
+
+  it('Should contain a form to add new orders', () => {
+    cy.visit('http://localhost:3000/');
+    cy.get('input').should('have.value', '');
+    cy.get('button').contains('beans')
+      .should('have.value', 'beans');
+    cy.get('button').contains('guacamole')
+      .should('have.value', 'guacamole');
+    cy.get('button').contains('Submit Order');
+  });
 });
