@@ -23,4 +23,10 @@ describe('Order form user flows', () => {
     cy.contains('Please enter your name and choose at least one ingredient');
     cy.contains('Order: Nothing selected');
   });
+
+  it('Name should update when typing into the input', () => {
+    cy.get('input').should('have.value', '').type('Lolo MAXXX')
+      .should('have.value', 'Lolo MAXXX');
+  });
+  
 });
