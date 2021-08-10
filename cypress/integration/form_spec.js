@@ -28,5 +28,11 @@ describe('Order form user flows', () => {
     cy.get('input').should('have.value', '').type('Lolo MAXXX')
       .should('have.value', 'Lolo MAXXX');
   });
-  
+
+  it('Should update order ingredients when the buttons are clicked', () => {
+    cy.get('button').contains('guacamole').click();
+    cy.contains('Order: guacamole');
+    cy.get('button').contains('carnitas').click();
+    cy.contains('Order: carnitas, guacamole');
+  });
 });
