@@ -13,7 +13,9 @@ describe('Order form user flows', () => {
         }
       ]
     });
-    
+    cy.intercept('POST', 'http://localhost:3001/api/v1/orders', {
+      statusCode: 204
+    });
   });
 
   it('Should be able to visit the page', () => {
