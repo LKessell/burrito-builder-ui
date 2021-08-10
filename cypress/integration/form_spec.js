@@ -44,4 +44,11 @@ describe('Order form user flows', () => {
     cy.get('button').contains('Submit Order').click();
     cy.get('.order').should('have.length', 2);
   });
+
+  it('Order will not be added if it contains no ingredients', () => {
+    cy.get('.order').should('have.length', 2);
+    cy.get('input').type('Lolo MAXXX');
+    cy.get('button').contains('Submit Order').click();
+    cy.get('.order').should('have.length', 2);
+  });
 });
