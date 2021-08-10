@@ -41,6 +41,13 @@ describe('Order form user flows', () => {
     cy.contains('Order: carnitas, guacamole');
   });
 
+  it('Name/ingredient prompt should disappear after the necessary data is entered', () => {
+    cy.contains('Please enter your name and choose at least one ingredient');
+    cy.get('input').type('Lolo MAXXX');
+    cy.get('button').contains('queso fresco').click();
+    cy.contains('Please enter your name and choose at least one ingredient').should('not.exist');
+  })
+
   it('Order will not be added if it does not contain a name', () => {
     cy.get('.order').should('have.length', 2);
     cy.get('button').contains('Submit Order').click();
