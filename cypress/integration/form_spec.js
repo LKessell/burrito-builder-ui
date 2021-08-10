@@ -35,4 +35,13 @@ describe('Order form user flows', () => {
     cy.get('button').contains('carnitas').click();
     cy.contains('Order: carnitas, guacamole');
   });
+
+  it('Order will not be added if it does not contain a name', () => {
+    cy.get('.order').should('have.length', 2);
+    cy.get('button').contains('Submit Order').click();
+    cy.get('.order').should('have.length', 2);
+    cy.get('button').contains('guacamole').click();
+    cy.get('button').contains('Submit Order').click();
+    cy.get('.order').should('have.length', 2);
+  });
 });
