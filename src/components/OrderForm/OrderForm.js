@@ -21,8 +21,10 @@ class OrderForm extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    this.props.addOrder(this.state);
-    this.clearInputs();
+    if (this.state.name.length && this.state.ingredients.length) {
+      this.props.addOrder(this.state);
+      this.clearInputs();
+    }
   }
 
   clearInputs = () => {
@@ -38,6 +40,7 @@ class OrderForm extends Component {
         </button>
       )
     });
+    const formMessage = !this.state.name.length || !this.state.ingredients.length ? <p>Please enter your name and choose at least one ingredient</p> : null;
 
     return (
       <form>
@@ -52,6 +55,8 @@ class OrderForm extends Component {
         { ingredientButtons }
 
         <p>Order: { this.state.ingredients.join(', ') || 'Nothing selected' }</p>
+
+        { formMessage }
 
         <button onClick={e => this.handleSubmit(e)}>
           Submit Order
