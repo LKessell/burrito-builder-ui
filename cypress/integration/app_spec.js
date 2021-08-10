@@ -27,6 +27,13 @@ describe('App user flows', () => {
     cy.get('div').should('have.class', 'order').contains('Lauren');
   });
 
+  it('Order cards should contain a name a list of ingredients', () => {
+    cy.visit('http://localhost:3000/');
+    cy.get('h3').contains('Lauren');
+    cy.get('ul').first().should('have.class', 'ingredient-list')
+      .children('li').should('have.length', 3);
+  })
+
   it('Should contain a form to add new orders', () => {
     cy.visit('http://localhost:3000/');
     cy.get('input').should('have.value', '');
